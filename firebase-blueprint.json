@@ -1,0 +1,139 @@
+{
+  "entities": {
+    "VisitorLog": {
+      "title": "Visitor Log",
+      "description": "Represents basic metadata collected during a landing page view for traffic audit purpose.",
+      "type": "object",
+      "properties": {
+        "visitorId": {
+          "type": "string",
+          "description": "Unique session placeholder for the current user device"
+        },
+        "visitedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The exact date-time stamp recorded when the page loaded"
+        },
+        "userAgent": {
+          "type": "string",
+          "description": "Client device application identifier information"
+        },
+        "language": {
+          "type": "string",
+          "description": "Selected interface system language (e.g. 'sw' or 'en')"
+        }
+      },
+      "required": ["visitorId", "visitedAt", "userAgent", "language"]
+    },
+    "SignupRecord": {
+      "title": "Signup Record",
+      "description": "Stores user distribution licenses and demographic inputs securely.",
+      "type": "object",
+      "properties": {
+        "fullName": {
+          "type": "string",
+          "description": "Full legal name of the stem cell distributor"
+        },
+        "email": {
+          "type": "string",
+          "description": "Official contact email address for corporate updates"
+        },
+        "phone": {
+          "type": "string",
+          "description": "Official contact telephone number with country code"
+        },
+        "tier": {
+          "type": "string",
+          "description": "Initial pack selection tier ('silver', 'gold', 'mobile')"
+        },
+        "signedUpAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Instantaneous registration timestamp"
+        }
+      },
+      "required": ["fullName", "email", "phone", "tier", "signedUpAt"]
+    },
+    "LoginEvent": {
+      "title": "Login Event",
+      "description": "Maintains log audits of authorized admin sessions.",
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "description": "Email used during authentication attempt"
+        },
+        "loggedInAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Accurate event record timestamp"
+        }
+      },
+      "required": ["email", "loggedInAt"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "Stores user orders and quantities securely.",
+      "type": "object",
+      "properties": {
+        "fullName": {
+          "type": "string",
+          "description": "Full name of the customer placing the order"
+        },
+        "email": {
+          "type": "string",
+          "description": "Contact email address of the customer"
+        },
+        "phone": {
+          "type": "string",
+          "description": "Contact phone number of the customer"
+        },
+        "address": {
+          "type": "string",
+          "description": "Physical delivery address"
+        },
+        "quantity": {
+          "type": "integer",
+          "description": "Number of RenoLife+ boxes ordered"
+        },
+        "totalPrice": {
+          "type": "number",
+          "description": "Computed final checkout total"
+        },
+        "currency": {
+          "type": "string",
+          "description": "Currency used (e.g. 'TZS' or 'USD')"
+        },
+        "orderedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp indicating when order was submitted"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["pending", "shipped", "delivered"],
+          "description": "Current status of order shipment"
+        }
+      },
+      "required": ["fullName", "email", "phone", "address", "quantity", "totalPrice", "currency", "orderedAt", "status"]
+    }
+  },
+  "firestore": {
+    "/visitors/{visitorId}": {
+      "schema": "VisitorLog",
+      "description": "A collection containing anonymous traffic and visitor data."
+    },
+    "/signups/{signupId}": {
+      "schema": "SignupRecord",
+      "description": "A collection containing confirmed distributor signup requests."
+    },
+    "/logins/{loginId}": {
+      "schema": "LoginEvent",
+      "description": "A collection capturing user authentication logs."
+    },
+    "/orders/{orderId}": {
+      "schema": "Order",
+      "description": "A collection capturing client orders and automated notification triggers."
+    }
+  }
+}

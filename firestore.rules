@@ -1,0 +1,69 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Default-deny Catch-all
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper functions
+    function isValidId(id) {
+      return id is string && id.size() > 0 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_-]+$');
+    }
+    
+    function incoming() {
+      return request.resource.data;
+    }
+    
+    function isAdmin() {
+      return request.auth != null && 
+             request.auth.token.email == 'jonsongodwin001@gmail.com' && 
+             request.auth.token.email_verified == true;
+    }
+
+    // Visitor logs rules
+    match /visitors/{visitorId} {
+      allow create, update: if isValidId(visitorId) 
+                    && incoming().visitorId is string && incoming().visitorId.size() <= 128
+                    && incoming().visitedAt is timestamp
+                    && incoming().userAgent is string && incoming().userAgent.size() <= 500
+                    && incoming().language is string && incoming().language.size() <= 10;
+      allow read: if isAdmin();
+    }
+
+    // Signup records rules
+    match /signups/{signupId} {
+      allow create: if isValidId(signupId)
+                    && incoming().fullName is string && incoming().fullName.size() <= 200
+                    && incoming().email is string && incoming().email.size() <= 254
+                    && incoming().phone is string && incoming().phone.size() <= 50
+                    && incoming().tier is string && incoming().tier.size() <= 50
+                    && incoming().signedUpAt is timestamp;
+      allow read: if isAdmin();
+    }
+
+    // Login events rules
+    match /logins/{loginId} {
+      allow create: if isValidId(loginId)
+                    && incoming().email is string && incoming().email.size() <= 254
+                    && incoming().loggedInAt is timestamp;
+      allow read: if isAdmin();
+    }
+
+    // Orders rules
+    match /orders/{orderId} {
+      allow create: if isValidId(orderId)
+                    && incoming().fullName is string && incoming().fullName.size() <= 200
+                    && incoming().email is string && incoming().email.size() <= 254
+                    && incoming().phone is string && incoming().phone.size() <= 50
+                    && incoming().address is string && incoming().address.size() <= 1000
+                    && incoming().quantity is int && incoming().quantity >= 1
+                    && (incoming().totalPrice is int || incoming().totalPrice is float) && incoming().totalPrice >= 0
+                    && incoming().currency is string && incoming().currency.size() <= 10
+                    && incoming().orderedAt is timestamp
+                    && incoming().status is string && incoming().status == 'pending';
+      allow read: if isAdmin();
+    }
+  }
+}

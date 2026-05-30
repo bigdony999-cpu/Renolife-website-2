@@ -1,0 +1,6 @@
+{
+  "name": "Renolife+",
+  "description": "Sayansi ya Mimea kwa Afya ya Seli (Plant Science for Cellular Health) responsive landing page.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

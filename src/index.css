@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Manrope:wght@200..800&display=swap');
+@import "tailwindcss";
+
+@variant dark (&:where(.dark, .dark *));
+
+:root {
+  --primary: #044b2d;
+  --secondary: #b38520;
+  --primary-container: #e5f6ed;
+  --on-primary-container: #044b2d;
+  --secondary-container: #fdf1d6;
+  --on-secondary-container: #765910;
+}
+
+.dark {
+  --primary: #0a1711;
+  --secondary: #e2b03d;
+  --primary-container: #0e2c1f;
+  --on-primary-container: #34d399;
+  --secondary-container: #3d2b04;
+  --on-secondary-container: #fbbf24;
+}
+
+@theme {
+  --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "EB Garamond", serif;
+
+  --color-secondary-fixed: #ffdea4;
+  --color-surface-dim: #dcd9d9;
+  --color-secondary-container: var(--secondary-container);
+  --color-surface-container-high: #eae7e7;
+  --color-surface-container: #f0eded;
+  --color-on-primary-fixed-variant: #2f4d3e;
+  --color-on-secondary-fixed: #261900;
+  --color-secondary: var(--secondary);
+  --color-on-primary-container: var(--on-primary-container);
+  --color-primary-container: var(--primary-container);
+  --color-on-tertiary-fixed: #1c1c18;
+  --color-outline-variant: #c2c8c2;
+  --color-on-tertiary-container: #8f8e88;
+  --color-inverse-primary: #adcebb;
+  --color-primary-fixed-dim: #adcebb;
+  --color-surface-tint: #476555;
+  --color-on-tertiary: #ffffff;
+  --color-inverse-on-surface: #f3f0ef;
+  --color-tertiary-container: #272723;
+  --color-error: #ba1a1a;
+  --color-on-surface-variant: #424844;
+  --color-on-secondary-fixed-variant: #5a4312;
+  --color-tertiary: #12120f;
+  --color-outline: #727973;
+  --color-secondary-fixed-dim: #e4c285;
+  --color-surface: #fcf9f8;
+  --color-on-error: #ffffff;
+  --color-on-tertiary-fixed-variant: #474742;
+  --color-on-primary-fixed: #022114;
+  --color-primary-fixed: #c9ead6;
+  --color-on-secondary: #ffffff;
+  --color-on-primary: #ffffff;
+  --color-error-container: #ffdad6;
+  --color-tertiary-fixed-dim: #c9c6c0;
+  --color-on-error-container: #93000a;
+  --color-background: #fcf9f8;
+  --color-surface-container-low: #f6f3f2;
+  --color-surface-container-highest: #e5e2e1;
+  --color-on-surface: #1c1b1b;
+  --color-surface-bright: #fcf9f8;
+  --color-tertiary-fixed: #e5e2db;
+  --color-inverse-surface: #313030;
+  --color-surface-container-lowest: #ffffff;
+  --color-on-secondary-container: var(--on-secondary-container);
+  --color-on-background: #1c1b1b;
+  --color-primary: var(--primary);
+  --color-surface-variant: #e5e2e1;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-surface text-on-surface antialiased transition-colors duration-300;
+  }
+}
